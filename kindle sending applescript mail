@@ -1,0 +1,26 @@
+-- Save as an application
+-- To fully automatate the process, you need to put a subject and content, otherwise Mail will need your confirmation to send email.
+
+on open doc -- simply drop your mobi document on you script
+	
+	
+	tell application "Mail"
+		
+		set theSubject to "Kindle" -- the subject. needed
+		set theContent to "Enjoy reading !" -- the content. needed
+		set theAddress to "XXX@kindle.com" -- the receiver. your @kindle.com email
+		set theAttachmentFile to doc -- the attachment path
+		
+		set msg to make new outgoing message with properties {subject:theSubject, content:theContent, visible:true}
+		
+		tell msg to make new to recipient at end of every to recipient with properties {address:theAddress}
+		tell msg to make new attachment with properties {file name:theAttachmentFile as alias}
+		
+		delay 3 -- needed to finsish attaching the file. Can be 1 or 2. Very IMPORTANT
+		
+		
+		send msg -- send the message
+		
+	end tell
+	
+end open
